@@ -1,0 +1,184 @@
+/* ─── CSS Variables (Light / Dark) ─────────────────────────────── */
+:root {
+    --bg:          #F2F2F7;
+    --card-bg:     #FFFFFF;
+    --text:        #000000;
+    --sub-text:    #8E8E93;
+    --accent:      #007AFF;
+    --divider:     #C6C6C8;
+    --red:         #FF3B30;
+    --green:       #34C759;
+    --header-bg:   rgba(242, 242, 247, 0.85);
+    --shadow:      0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+    --radius:      12px;
+}
+
+body.dark-theme {
+    --bg:          #000000;
+    --card-bg:     #1C1C1E;
+    --text:        #FFFFFF;
+    --sub-text:    #8E8E93;
+    --accent:      #0A84FF;
+    --divider:     #38383A;
+    --red:         #FF453A;
+    --green:       #32D74B;
+    --header-bg:   rgba(28, 28, 30, 0.85);
+    --shadow:      0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.25);
+}
+
+/* ─── Reset & Base ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+}
+
+/* ─── Fixed Header ──────────────────────────────────────────────── */
+.ios-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 60px;
+    background: var(--header-bg);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 0.5px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 1000;
+}
+
+.ios-header h1 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 1;
+}
+
+/* ─── Page Content ──────────────────────────────────────────────── */
+.container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 76px 16px 40px;
+}
+
+/* ─── Section Label ─────────────────────────────────────────────── */
+.section-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sub-text);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 4px;
+    margin: 20px 0 6px;
+}
+
+/* ─── Form / Input Group ────────────────────────────────────────── */
+.form-group {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.input-wrapper {
+    position: relative;
+    border-bottom: 0.5px solid var(--divider);
+}
+.input-wrapper:last-of-type {
+    border-bottom: none;
+}
+
+.input-wrapper input {
+    width: 100%;
+    height: 46px;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0 16px;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text);
+}
+
+.input-wrapper input::placeholder {
+    color: var(--sub-text);
+}
+
+/* IMEI duplicate error */
+.error-text {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--red);
+    font-size: 12px;
+    font-weight: 500;
+    visibility: hidden;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Красная обводка поля при ошибке */
+.input-wrapper.has-error {
+    background: rgba(255, 59, 48, 0.04);
+}
+.input-wrapper.has-error input {
+    box-shadow: inset 0 0 0 1.5px rgba(255, 59, 48, 0.45);
+    border-radius: 4px;
+}
+body.dark-theme .input-wrapper.has-error input {
+    box-shadow: inset 0 0 0 1.5px rgba(255, 69, 58, 0.5);
+    background: rgba(255, 69, 58, 0.06);
+}
+
+/* ─── Action Bar (below form) ───────────────────────────────────── */
+.actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+/* ─── Status Message ────────────────────────────────────────────── */
+.status {
+    font-size: 13px;
+    color: var(--sub-text);
+    padding: 4px 4px 10px;
+    letter-spacing: -0.1px;
+}
+
+/* ─── Phone List ────────────────────────────────────────────────── */
+#phone-list {
+    list-style: none;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+#phone-list:empty::after {
+    content: 'Нет записей';
+    display: block;
+    text-align: center;
+    padding: 28px 16px;
+    font-size: 15px;
+    color: var(--sub-text);
+}

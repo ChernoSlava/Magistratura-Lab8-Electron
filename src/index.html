@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ULIM Lab 8 - CRUD System</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/modal.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>📱 Управление базой данных (JSON)</h2>
+
+    <input type="hidden" id="edit-mode" value="false">
+
+    <div class="form-group">
+        <div class="input-wrapper">
+            <input type="text" id="in-imei" placeholder="IMEI">
+            <div id="imei-error" class="error-text">Этот IMEI уже существует</div>
+        </div>
+        <div class="input-wrapper">
+            <input type="text" id="in-brand" placeholder="Бренд">
+        </div>
+        <div class="input-wrapper">
+            <input type="text" id="in-model" placeholder="Модель">
+        </div>
+        <div class="input-wrapper">
+            <input type="text" id="in-country" placeholder="Страна">
+        </div>
+        <div class="input-wrapper">
+            <input type="number" id="in-price" placeholder="Цена (MDL)" min="0">
+        </div>
+
+        <button id="btn-save" disabled>💾 Сохранить запись</button>
+        <button id="btn-cancel" style="display:none;">❌ Отмена редактирования</button>
+    </div>
+
+    <div class="actions">
+        <button id="btn-load" class="btn-main">📂 Загрузить</button>
+        <button id="btn-filter" class="btn-filter">🟢 South Korea</button>
+        <button id="btn-seed" class="btn-secondary">⚙️ Сброс / Демо</button>
+    </div>
+
+    <div id="status-msg" class="status">Статус: Программа запущена</div>
+    <ul id="phone-list"></ul>
+
+    <dialog id="modal-reset">
+        <div class="modal-header">
+            <h3>Варианты сброса</h3>
+            <button class="close-modal">Закрыть</button>
+        </div>
+        <div class="modal-options">
+            <button id="btn-reset-clear" class="btn-danger">🔴 Очистить файл (БД)</button>
+            <button id="btn-reset-demo" class="btn-main">🔄 Сбросить и подгрузить Demo</button>
+            <button id="btn-ui-clear" class="btn-secondary">🧹 Просто очистить список</button>
+        </div>
+    </dialog>
+
+    <dialog id="modal-load">
+        <div class="modal-header">
+            <h3>Загрузка данных</h3>
+            <button class="close-modal">Закрыть</button>
+        </div>
+        <div class="modal-options">
+            <button id="btn-load-default" class="btn-main">📂 Системная БД</button>
+            <button id="btn-load-custom" class="btn-custom-load">🖥️ Выбрать файл</button>
+        </div>
+    </dialog>
+</div>
+
+<script type="module" src="js/renderer.js"></script>
+</body>
+</html>
