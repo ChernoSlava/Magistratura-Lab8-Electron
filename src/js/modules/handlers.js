@@ -9,15 +9,14 @@ export function setupHandlers(context, elements) {
         modalLoad, modalReset, statusMsg
     } = elements;
 
-    // --- Закрытие модалок ---
+    // Закрытие модалок
     document.querySelectorAll('.close-modal').forEach(btn => {
         btn.onclick = () => btn.closest('dialog').close();
     });
 
-    // --- Модалка ЗАГРУЗКИ ---
+    // ── Загрузка: Системная БД ──
     document.getElementById('btn-load-default').onclick = async () => {
         let data = await window.api.loadData() || [];
-
         if (data.length === 0) {
             modalLoad.close();
             if (confirm('Системная база пуста. Хотите создать демонстрационные данные?')) {
@@ -31,11 +30,11 @@ export function setupHandlers(context, elements) {
             statusMsg.textContent = 'Статус: Данные загружены из системной БД.';
             modalLoad.close();
         }
-
         context.allData = data;
         context.refresh();
     };
 
+    // ── Загрузка: Внешний файл ──
     document.getElementById('btn-load-custom').onclick = async () => {
         const customData = await window.api.openCustomFile();
         if (customData) {
@@ -46,7 +45,7 @@ export function setupHandlers(context, elements) {
         modalLoad.close();
     };
 
-    // --- Модалка СБРОСА ---
+    // ── Сброс: Очистить файл ──
     document.getElementById('btn-reset-clear').onclick = async () => {
         if (!confirm('Внимание! Это полностью очистит базу данных на диске. Продолжить?')) return;
         context.allData = [];
@@ -57,6 +56,7 @@ export function setupHandlers(context, elements) {
         statusMsg.textContent = 'Статус: Файл базы данных очищен.';
     };
 
+    // ── Сброс: Загрузить Demo ──
     document.getElementById('btn-reset-demo').onclick = async () => {
         context.allData = getDemoData();
         await window.api.saveData(context.allData);
@@ -65,20 +65,22 @@ export function setupHandlers(context, elements) {
         statusMsg.textContent = 'Статус: Записаны демонстрационные данные.';
     };
 
+    // ── Сброс: Очистить экран ──
     document.getElementById('btn-ui-clear').onclick = () => {
         UI.render([], elements, {});
         statusMsg.textContent = 'Статус: Список на экране очищен (файл не затронут).';
         modalReset.close();
     };
 
-    // --- Сохранение записи ---
+    // ── Сохранение записи ──
     btnSave.onclick = async () => {
         const phoneObj = {
             imei:    elements.inImei.value.trim(),
             brand:   elements.inBrand.value.trim(),
             model:   elements.inModel.value.trim(),
+            color:   elements.inColor.value.trim(),
             country: elements.inCountry.value.trim(),
-            price:   Number(elements.inPrice.value)   // ✅ число, не строка
+            price:   Number(elements.inPrice.value)
         };
 
         if (elements.isEditMode.value === 'true') {
@@ -96,7 +98,7 @@ export function setupHandlers(context, elements) {
 
     btnCancel.onclick = () => UI.clearForm(elements, () => validateForm(elements, context.allData));
 
-    // --- Фильтр ---
+    // ── Фильтр ──
     btnFilter.onclick = () => {
         context.isFilterActive = !context.isFilterActive;
         btnFilter.textContent = context.isFilterActive ? '🔄 Показать все' : `🟢 ${FILTER_COUNTRY}`;
@@ -110,8 +112,10 @@ export function setupHandlers(context, elements) {
 
 function getDemoData() {
     return [
-        { imei: '101', brand: 'Samsung', model: 'S24',    country: 'South Korea', price: 22000 },
-        { imei: '102', brand: 'LG',      model: 'Velvet', country: 'South Korea', price: 12000 },
-        { imei: '103', brand: 'Apple',   model: 'iPhone 15', country: 'USA',      price: 25000 }
+        { imei: '101', brand: 'Samsung', model: 'S24',       color: 'Phantom Black', country: 'South Korea', price: 22000 },
+        { imei: '102', brand: 'LG',      model: 'Velvet',    color: 'Aurora White',  country: 'South Korea', price: 12000 },
+        { imei: '103', brand: 'Apple',   model: 'iPhone 15', color: 'Midnight',      country: 'USA',         price: 25000 },
+        { imei: '104', brand: 'Samsung', model: 'A55',       color: 'Iceblue',       country: 'South Korea', price: 9000  },
+        { imei: '105', brand: 'Xiaomi',  model: 'Redmi 13',  color: 'Midnight Black',country: 'China',       price: 6500  },
     ];
 }

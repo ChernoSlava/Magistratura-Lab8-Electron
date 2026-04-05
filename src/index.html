@@ -9,11 +9,41 @@
 </head>
 <body>
 
+<!-- ─── Header ─────────────────────────────────────── -->
+<header class="ios-header">
+    <div class="header-left"></div>
+    <h1>📱 MobilePhone DB</h1>
+    <div class="header-right">
+        <button id="btn-theme" class="theme-btn" title="Тёмная тема">🌙</button>
+    </div>
+</header>
+
 <div class="container">
-    <h2>📱 Управление базой данных (JSON)</h2>
 
     <input type="hidden" id="edit-mode" value="false">
 
+    <!-- ─── Статистика ──────────────────────────────── -->
+    <div class="ios-stats">
+        <div class="stat-card">
+            <span class="stat-value" id="stat-total">0</span>
+            <span class="stat-label">Всего записей</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="stat-avg">0</span>
+            <span class="stat-label">Средняя цена</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="stat-top">—</span>
+            <span class="stat-label">Топ бренд</span>
+        </div>
+    </div>
+
+    <!-- ─── Поиск ───────────────────────────────────── -->
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="🔍  Поиск по бренду, модели, стране...">
+    </div>
+
+    <!-- ─── Форма ───────────────────────────────────── -->
     <div class="form-group">
         <div class="input-wrapper">
             <input type="text" id="in-imei" placeholder="IMEI">
@@ -26,6 +56,9 @@
             <input type="text" id="in-model" placeholder="Модель">
         </div>
         <div class="input-wrapper">
+            <input type="text" id="in-color" placeholder="Цвет">
+        </div>
+        <div class="input-wrapper">
             <input type="text" id="in-country" placeholder="Страна">
         </div>
         <div class="input-wrapper">
@@ -36,6 +69,7 @@
         <button id="btn-cancel" style="display:none;">❌ Отмена редактирования</button>
     </div>
 
+    <!-- ─── Action Bar ──────────────────────────────── -->
     <div class="actions">
         <button id="btn-load" class="btn-main">📂 Загрузить</button>
         <button id="btn-filter" class="btn-filter">🟢 South Korea</button>
@@ -44,30 +78,32 @@
 
     <div id="status-msg" class="status">Статус: Программа запущена</div>
     <ul id="phone-list"></ul>
-
-    <dialog id="modal-reset">
-        <div class="modal-header">
-            <h3>Варианты сброса</h3>
-            <button class="close-modal">Закрыть</button>
-        </div>
-        <div class="modal-options">
-            <button id="btn-reset-clear" class="btn-danger">🔴 Очистить файл (БД)</button>
-            <button id="btn-reset-demo" class="btn-main">🔄 Сбросить и подгрузить Demo</button>
-            <button id="btn-ui-clear" class="btn-secondary">🧹 Просто очистить список</button>
-        </div>
-    </dialog>
-
-    <dialog id="modal-load">
-        <div class="modal-header">
-            <h3>Загрузка данных</h3>
-            <button class="close-modal">Закрыть</button>
-        </div>
-        <div class="modal-options">
-            <button id="btn-load-default" class="btn-main">📂 Системная БД</button>
-            <button id="btn-load-custom" class="btn-custom-load">🖥️ Выбрать файл</button>
-        </div>
-    </dialog>
 </div>
+
+<!-- ─── Modal: Сброс ────────────────────────────────── -->
+<dialog id="modal-reset">
+    <div class="modal-header">
+        <h3>Варианты сброса</h3>
+        <button class="close-modal">Закрыть</button>
+    </div>
+    <div class="modal-options">
+        <button id="btn-reset-clear" class="btn-danger">🔴 Очистить файл (БД)</button>
+        <button id="btn-reset-demo" class="btn-main">🔄 Сбросить и подгрузить Demo</button>
+        <button id="btn-ui-clear" class="btn-secondary">🧹 Просто очистить список</button>
+    </div>
+</dialog>
+
+<!-- ─── Modal: Загрузка ─────────────────────────────── -->
+<dialog id="modal-load">
+    <div class="modal-header">
+        <h3>Загрузка данных</h3>
+        <button class="close-modal">Закрыть</button>
+    </div>
+    <div class="modal-options">
+        <button id="btn-load-default" class="btn-main">📂 Системная БД</button>
+        <button id="btn-load-custom" class="btn-custom-load">🖥️ Выбрать файл</button>
+    </div>
+</dialog>
 
 <script type="module" src="js/renderer.js"></script>
 </body>

@@ -11,9 +11,13 @@ export const UI = {
             const phone = MobilePhone.fromJSON(item);
             const li = document.createElement('li');
 
+            const colorBadge = phone.color && phone.color !== 'N/A'
+                ? `<span class="color-badge">${phone.color}</span>`
+                : '';
+
             li.innerHTML = `
                 <div class="item-info">
-                    <span class="item-main">${phone.brand} ${phone.model}</span>
+                    <span class="item-main">${phone.brand} ${phone.model} ${colorBadge}</span>
                     <span class="item-sub">${phone.imei} · ${phone.country} · ${phone.price.toLocaleString('ru-MD')} MDL</span>
                 </div>
                 <div class="item-actions">
@@ -22,7 +26,7 @@ export const UI = {
                 </div>
             `;
 
-            li.querySelector('.btn-edit').onclick = () => callbacks.onEdit?.(phone.imei);
+            li.querySelector('.btn-edit').onclick   = () => callbacks.onEdit?.(phone.imei);
             li.querySelector('.btn-delete').onclick = () => callbacks.onRemove?.(phone.imei);
 
             phoneListElement.appendChild(li);
@@ -30,17 +34,23 @@ export const UI = {
     },
 
     clearForm(elements, validateCallback) {
-        const { inImei, inBrand, inModel, inCountry, inPrice, isEditMode, btnSave, btnCancel } = elements;
+        const { inImei, inBrand, inModel, inColor, inCountry, inPrice,
+                isEditMode, btnSave, btnCancel } = elements;
 
-        inImei.value = '';
+        inImei.value    = '';
         inImei.disabled = false;
-        inBrand.value = '';
-        inModel.value = '';
+        inBrand.value   = '';
+        inModel.value   = '';
+        inColor.value   = '';
         inCountry.value = '';
-        inPrice.value = '';
-        isEditMode.value = 'false';
-        btnSave.textContent = '💾 Сохранить запись';
+        inPrice.value   = '';
+        isEditMode.value        = 'false';
+        btnSave.textContent     = '💾 Сохранить запись';
         btnCancel.style.display = 'none';
+
+        // Сбрасываем классы ошибок
+        document.querySelectorAll('.input-wrapper.has-error')
+            .forEach(el => el.classList.remove('has-error'));
 
         if (validateCallback) validateCallback();
     }
